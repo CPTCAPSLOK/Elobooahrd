@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Fix for transparent dropdowns across the entire application */
+.mat-mdc-select-panel {
+  background-color: white !important;
+}
+
+.mdc-menu-surface {
+  background-color: white !important;
+}
+
+.mat-mdc-option {
+  background-color: white !important;
+}
+
+.mat-mdc-option:hover {
+  background-color: #f5f5f5 !important;
+}
+
+.mat-mdc-option.mat-mdc-option-active {
+  background-color: #e0e0e0 !important;
+}

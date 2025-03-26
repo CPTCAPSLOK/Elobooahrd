@@ -1,0 +1,62 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Players</mat-card-title>
+      <mat-card-subtitle>List of all players and their Elo ratings</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+      
+      <div *ngIf="error" class="error-container">
+        <p>{{ errorMessage }}</p>
+        <button mat-raised-button color="primary" (click)="retryLoading()">
+          <mat-icon>refresh</mat-icon> Retry
+        </button>
+      </div>
+      
+      <div *ngIf="!loading && !error">
+        <table mat-table [dataSource]="players" class="mat-elevation-z2 players-table">
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let player">{{player.name}}</td>
+          </ng-container>
+          
+          <!-- Elo Ratings Column -->
+          <ng-container matColumnDef="eloRatings">
+            <th mat-header-cell *matHeaderCellDef>Elo Ratings</th>
+            <td mat-cell *matCellDef="let player">
+              <div *ngIf="gamesLoading" class="loading-inline">
+                <mat-spinner diameter="20"></mat-spinner> Loading games...
+              </div>
+              
+              <div *ngIf="gamesError" class="error-inline">
+                <mat-icon color="warn">error</mat-icon> Error loading games
+              </div>
+              
+              <div *ngIf="!gamesLoading && !gamesError">
+                <div *ngIf="getObjectKeys(player.eloRatings).length === 0" class="no-ratings">
+                  No ratings yet
+                </div>
+                <div *ngIf="getObjectKeys(player.eloRatings).length > 0">
+                  <mat-chip-set>
+                    <ng-container *ngFor="let gameId of getObjectKeys(player.eloRatings)">
+                      <mat-chip>
+                        {{getGameName(gameId)}}: {{player.eloRatings[gameId]}}
+                      </mat-chip>
+                    </ng-container>
+                  </mat-chip-set>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

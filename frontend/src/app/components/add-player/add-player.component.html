@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Add New Player</mat-card-title>
+      <mat-card-subtitle>Create a new player to track in the Eloboard</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Player Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter player name">
+          <mat-error *ngIf="playerForm.get('name')?.hasError('required')">
+            Player name is required
+          </mat-error>
+          <mat-error *ngIf="playerForm.get('name')?.hasError('minlength')">
+            Player name must be at least 2 characters
+          </mat-error>
+          <mat-error *ngIf="playerForm.get('name')?.hasError('maxlength')">
+            Player name cannot exceed 50 characters
+          </mat-error>
+        </mat-form-field>
+        
+        <div class="info-box">
+          <mat-icon color="info">info</mat-icon>
+          <span>New players will start with the default Elo rating for each game.</span>
+        </div>
+        
+        <div class="button-container">
+          <button mat-button type="button" routerLink="/players">Cancel</button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="playerForm.invalid || submitting">
+            <mat-spinner *ngIf="submitting" diameter="20" class="spinner"></mat-spinner>
+            <span *ngIf="!submitting">Add Player</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

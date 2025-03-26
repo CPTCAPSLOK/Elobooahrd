@@ -1,0 +1,25 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loading-container, .error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.games-table {
+  width: 100%;
+  margin-top: 16px;
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.error-container {
+  color: #f44336;
+}
